@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <style>
+      .highlighted {
+        background-color: #11ffbd;
+      }
+    </style>
+    <script src="index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <script type="text/javascript">
+      google.charts.load("current", {
+        packages: ["geochart"],
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+      Gdata = getRealData();
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ["Country", "Price in USD", "Local Price"],
+          ...Gdata,
+        ]);
+
+        var options = { colorAxis: { colors: ["#AAFFA9", "#11FFBD"] } };
+
+        var chart = new google.visualization.GeoChart(
+          document.getElementById("regions_div")
+        );
+        eDataP = extraData();
+        console.log(eDataP);
+
+        google.visualization.events.addListener(chart, "select", selectHandler);
+        function selectHandler(params) {
+          var selection = chart.getSelection();
+          for (let index = 0; index < selection.length; index++) {
+            console.log(Gdata[selection[index].row][0]);
+            document.getElementById("country").innerHTML =
+              Gdata[selection[index].row][0];
+            document.getElementById("cost").innerHTML =
+              eDataP[selection[index].row][1].toFixed(2);
+            document.getElementById("real_rate").innerHTML =
+              eDataP[selection[index].row][2].toFixed(2);
+            document.getElementById("rate").innerHTML = (
+              eDataP[selection[index].row][1] / 5.65
+            ).toFixed(2);
+            document.getElementById("currency").innerHTML =
+              eDataP[selection[index].row][0];
+            const percentage = (
+              ((eDataP[selection[index].row][2] -
+                (eDataP[selection[index].row][1] / 5.65).toFixed(2)) *
+                100) /
+              eDataP[selection[index].row][2]
+            ).toFixed(2);
+            document.getElementById("percent").innerHTML = Math.abs(percentage);
+            document.getElementById("value").innerHTML =
+              percentage > 0 ? "undervalued" : "overvalued";
+          }
+        }
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body
+    style="
+      color: #141414;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      width: 100%;
+      overflow-x: hidden;
+      line-height: 1.7;
+    "
+  >
+    <div
+      style="
+        font-family: 'Be Vietnam Pro', sans-serif;
+        width: 100%;
+        line-height: 1.7;
+        display: flex;
+        font-weight: 300;
+      "
+    >
+      <div style=" margin: 30"> 
+        <div
+          id="regions_div"
+          style="width: 900px; height: 500px; border-style: dotted;"
+        ></div>
+        <p style="font-size: 0.8em";>Click on the countries on the map to compare the exchange rates.</p>
+      </div>
+      <div style="width: 30%">
+        <h1 style="font-family: 'Be Vietnam Pro'; font-weight: 400">
+          <u>Burgernomics</u>
+        </h1>
+        <p>
+          The big mac index was invented by The Economist in 1986 as a
+          lighthearted guide to whether currencies are at their “correct” level.
+          It is based on the theory of purchasing-power parity (PPP),the notion
+          that in the long run exchange rates should move towards the rate that
+          would equalise the prices of an identical basket of goods and services
+          (in this case, a burger) in any two countries.
+        </p>
+
+        <p>
+          Burgernomics was never intended as a precise gauge of currency
+          misalignment, merely a tool to make exchange-rate theory more
+          digestible.
+        </p>
+        <p>
+          Yet the Big Mac index has become a global standard, included in
+          several economic textbooks and the subject of dozens of academic
+          studies.
+          <span class="highlighted">
+            (For those who take their fast food more seriously)</span
+          >
+        </p>
+      </div>
+    </div>
+    <p style="margin: 30">
+      In <span class="highlighted" id="country">United States</span> a Big Mac
+      costs <span id="cost">5.65</span> <span id="currency">USD</span> . The
+      exchange rate should be <span id="rate" class="highlighted">1</span>. The
+      difference between the real rate, <span id="real_rate">1</span> suggestes
+      that the <span id="currency">USD</span> is <span id="percent">0</span>%
+      <span id="value" class="highlighted">undervalued</span>
+    </p>
+  </body>
+</html>
