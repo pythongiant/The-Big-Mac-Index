@@ -64,14 +64,14 @@
         var chart = new google.visualization.GeoChart(
           document.getElementById("regions_div")
         );
-        eDataP = extraData();
+        var eDataP = extraData();
         console.log(eDataP);
 
         google.visualization.events.addListener(chart, "select", selectHandler);
         function selectHandler(params) {
           var selection = chart.getSelection();
           for (let index = 0; index < selection.length; index++) {
-            console.log(Gdata[selection[index].row][0]);
+            console.log(eDataP[selection[index].row])
             document.getElementById("country").innerHTML =
               Gdata[selection[index].row][0];
             document.getElementById("cost").innerHTML =
@@ -81,7 +81,9 @@
             document.getElementById("rate").innerHTML = (
               eDataP[selection[index].row][1] / 5.65
             ).toFixed(2);
-            document.getElementById("currency").innerHTML =
+            document.getElementsByClassName("currency")[0].innerHTML =
+              eDataP[selection[index].row][0];
+            document.getElementsByClassName("currency")[1].innerHTML =
               eDataP[selection[index].row][0];
             const percentage = (
               ((eDataP[selection[index].row][2] -
@@ -151,10 +153,10 @@
     </div>
     <p class ="calcs" style="margin: 30px">
       In <span class="highlighted" id="country">United States</span> a Big Mac
-      costs <span id="cost">5.65</span> <span id="currency">USD</span> . The
+      costs <span id="cost">5.65</span> <span class="currency">USD</span> . The
       exchange rate should be <span id="rate" class="highlighted">1</span>. The
-      difference between the real rate, <span id="real_rate">1</span> suggestes
-      that the <span id="currency">USD</span> is <span id="percent">0</span>%
+      difference between the real rate, <span id="real_rate">1</span> suggests
+      that the <span class="currency">USD</span> is <span id="percent">0</span>%
       <span id="value" class="highlighted">undervalued</span>
     </p>
   </body>

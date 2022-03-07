@@ -82,6 +82,7 @@ function getRealData(){
 }
 const raw_data_p = []
 function extraData(){
+    console.log(raw_data_p)
     raw_data.forEach(element=>{
         raw_data_p.push([element[1],element[2],element[3]])
     })
