@@ -4,11 +4,42 @@
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+    
     <style>
       .highlighted {
         background-color: #11ffbd;
       }
+      html,body{
+          margin:0;
+          overflow-x: hidden !important; 
+        
+          height: 100%;
+          width:100%;
+      }
+      .writes{
+          margin:30px;
+      }
+      @media screen and (max-width: 500px) {
+          body{
+              padding:10px;
+          }
+        .write_up{
+            width:70% !important;
+        }
+        .writes,.calcs{
+            margin:0 !important;
+            
+            width: 80% !important;
+            
+        }
+        #regions_div{
+            width:80vw!important;
+            height: 30vh !important;
+        }
+        }
     </style>
+    <title>Burgernomics</title>
     <script src="index.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -71,28 +102,26 @@
     style="
       color: #141414;
       font-family: 'Be Vietnam Pro', sans-serif;
-      width: 100%;
       overflow-x: hidden;
-      line-height: 1.7;
     "
   >
     <div
       style="
         font-family: 'Be Vietnam Pro', sans-serif;
-        width: 100%;
         line-height: 1.7;
         display: flex;
+        flex-wrap: wrap-reverse;
         font-weight: 300;
       "
     >
-      <div style=" margin: 30"> 
+      <div  class="writes"> 
         <div
-          id="regions_div"
-          style="width: 900px; height: 500px; border-style: dotted;"
+        id="regions_div"
+          style="width: 50vw; height: 65vh;"
         ></div>
         <p style="font-size: 0.8em";>Click on the countries on the map to compare the exchange rates.</p>
       </div>
-      <div style="width: 30%">
+      <div style="width: 30%" class="write_up">
         <h1 style="font-family: 'Be Vietnam Pro'; font-weight: 400">
           <u>Burgernomics</u>
         </h1>
@@ -120,7 +149,7 @@
         </p>
       </div>
     </div>
-    <p style="margin: 30">
+    <p class ="calcs" style="margin: 30px">
       In <span class="highlighted" id="country">United States</span> a Big Mac
       costs <span id="cost">5.65</span> <span id="currency">USD</span> . The
       exchange rate should be <span id="rate" class="highlighted">1</span>. The
